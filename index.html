@@ -4611,34 +4611,31 @@ async function runWangClustering() {
   }
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#data=')) {
-        try {
-          const base64Data = hash.substring(6);
-          const csvText = decodeURIComponent(atob(base64Data));
-          
-          // Note: Ensure `parseFileText`, `addPanel`, etc., 
-          // match the actual parsing function names used inside The ORA-cle codebase.
-          const parsed = parseFileText(csvText); 
-          if (parsed.data.length > 0) {
-            const panel = addPanel(null);
-            panel.rawData = parsed.data;
-            panel.fmt = parsed.fmt;
-            panel.title = "R App Export";
-            panel.filters = defaultFilters(panel.rawData);
-            
-            const overlay = document.getElementById('main-drop-overlay');
-            if (overlay) overlay.classList.add('hidden');
-            
-            setActivePanelId(panel.id);
-            renderAll();
-          }
-        } catch (err) {
-          console.error("Failed to load data from URL hash", err);
-        }
-      }
-    });
+window.addEventListener('DOMContentLoaded', async () => {
+  const hash = window.location.hash;
+  let csvText = null;
+  try {
+    if (hash.startsWith('#gist=')) {
+      const id = hash.substring(6);
+      const meta = await (await fetch('https://api.github.com/gists/' + id)).json();
+      const file = Object.values(meta.files)[0];
+      csvText = await (await fetch(file.raw_url)).text();   // raw_url also works for files > 1 MB
+    } else if (hash.startsWith('#data=')) {
+      csvText = decodeURIComponent(atob(hash.substring(6)));
+    }
+    if (!csvText) return;
+    const parsed = parseFileText(csvText);
+    if (parsed.data.length > 0) {
+      const panel = addPanel(null);
+      panel.rawData = parsed.data; panel.fmt = parsed.fmt;
+      panel.title = "R App Export";
+      panel.filters = defaultFilters(panel.rawData);
+      const overlay = document.getElementById('main-drop-overlay');
+      if (overlay) overlay.classList.add('hidden');
+      setActivePanelId(panel.id); renderAll();
+    }
+  } catch (err) { console.error("Failed to load data from URL hash", err); }
+});
 </script>
 
 </body>
