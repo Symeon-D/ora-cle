@@ -1,0 +1,97 @@
+/* toolbar.css: Quick actions, plot icon bar, delete confirmation, edit popups */
+  /* ── Quick Actions trigger button in header ───────────────────── */
+  #header-actions { margin-left: auto; display: flex; align-items: center; gap: 2px; }
+
+
+  /* ── Plot icon bar ──────────────────────────────────────────────── */
+  .pib-btn {
+    width: 28px; height: 28px;
+    background: none; border: none; border-radius: 5px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--text-dim); transition: background .15s, color .15s;
+    padding: 0; flex-shrink: 0;
+  }
+  .pib-btn svg {
+    width: 18px; height: 18px;
+    fill: none; stroke: currentColor;
+    stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  }
+  .pib-btn:hover { background: var(--surface2); }
+  /* Edit — yellow */
+  #pib-edit { color: #f5c842; }
+  #pib-edit:hover { color: #f5c842; background: #f5c84220; }
+  #pib-edit.active { color: #f5c842; }
+  /* Cluster — purple */
+  #pib-cluster { color: #7c83fd; }
+  #pib-cluster:hover { color: #7c83fd; background: #7c83fd20; }
+  #pib-cluster.active { color: #7c83fd; }
+  /* Up/Down — neutral accent */
+  #pib-up, #pib-down { color: #90a4ae; }
+  #pib-up:hover, #pib-down:hover { color: #cfd8dc; background: #90a4ae18; }
+  #pib-reset { color: #4db6ac; }
+  #pib-reset:hover { color: #4db6ac; background: #4db6ac20; }
+  /* Delete — red */
+  .pib-btn.pib-danger { color: #ef5350; }
+  .pib-btn.pib-danger:hover { color: #ef5350; background: #ef535020; }
+  .pib-btn.active { color: inherit; }
+  .pib-sep {
+    width: 1px; height: 18px;
+    background: var(--border); margin: 0 2px; flex-shrink: 0;
+  }
+  .pib-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .pib-btn:disabled:hover { background: none; }
+  /* Delete confirm dialog */
+  #delete-confirm-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.45); z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  #delete-confirm-overlay.show { display: flex; }
+  #delete-confirm-box {
+    background: #1a1d23; border: 1px solid #333; border-radius: 10px;
+    padding: 22px 26px; min-width: 300px; max-width: 380px;
+    box-shadow: 0 8px 32px rgba(0,0,0,.5);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  #delete-confirm-box h4 {
+    margin: 0 0 10px; font-size: .82rem; color: #ef5350;
+    font-family: 'Syne', sans-serif; font-weight: 800;
+  }
+  #delete-confirm-box p { margin: 0 0 16px; font-size: .68rem; color: #aaa; line-height: 1.5; }
+  #delete-confirm-box .dc-check {
+    display: flex; align-items: center; gap: 8px;
+    font-size: .62rem; color: #777; margin-bottom: 18px; cursor: pointer;
+  }
+  #delete-confirm-box .dc-check input { cursor: pointer; accent-color: #ef5350; }
+  #delete-confirm-box .dc-btns { display: flex; gap: 8px; justify-content: flex-end; }
+  #delete-confirm-box .dc-cancel {
+    padding: 6px 14px; border-radius: 6px; border: 1px solid #444;
+    background: transparent; color: #aaa; font-size: .65rem; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; transition: all .15s;
+  }
+  #delete-confirm-box .dc-cancel:hover { border-color: #666; color: #ccc; }
+  #delete-confirm-box .dc-confirm {
+    padding: 6px 14px; border-radius: 6px; border: none;
+    background: #ef5350; color: white; font-size: .65rem; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace; font-weight: 700; transition: all .15s;
+  }
+  #delete-confirm-box .dc-confirm:hover { background: #f44336; }
+
+  /* Edit bar popup buttons */
+  .eb-btn {
+    width: 30px; height: 30px; border-radius: 6px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: background .15s, filter .15s; flex-shrink: 0;
+  }
+  .eb-apply {
+    border: none; background: #4caf5022; color: #4caf50;
+  }
+  .eb-apply:hover { background: #4caf50; color: white; }
+  .eb-cancel {
+    border: 1px solid var(--border); background: #ef535012; color: #ef5350;
+  }
+  .eb-cancel:hover { background: #ef5350; color: white; }
+  .eb-reset {
+    border: 1px solid var(--border); background: #4db6ac12; color: #4db6ac;
+  }
+  .eb-reset:hover { background: #4db6ac; color: white; }

@@ -1,0 +1,40 @@
+/* chart-area.css: Stats bar and chart scroll area */
+  /* Stats bar */
+  #stats-bar {
+    display: none; align-items: center; gap: 18px;
+    padding: 9px 20px; border-bottom: 1px solid #ececec;
+    background: #fafafa; flex-shrink: 0;
+  }
+  .stat { font-size: .61rem; color: #aaa; font-family: 'JetBrains Mono', monospace; }
+  .stat strong { color: #444; font-weight: 600; }
+
+  /* Chart area */
+  #chart-area {
+    flex: 1; overflow: auto; position: relative;
+    padding: 20px 24px; display: none;
+  }
+  #chart-area::-webkit-scrollbar { width: 6px; height: 6px; }
+  #chart-area::-webkit-scrollbar-thumb { background: #ddd; border-radius: 3px; }
+
+  .btn-subplot { background: transparent; color: #4fc3f7; border: 1px solid #4fc3f7; }
+  .btn-subplot:hover { background: #4fc3f710; }
+  .btn-cluster { background: transparent; color: #7c83fd; border: 1px solid #7c83fd; }
+  .btn-cluster:hover { background: #7c83fd15; }
+  .btn-cluster.active { background: #7c83fd; color: white; }
+  .btn-filter-clusters { background: transparent; color: #555; border: 1px solid #444; opacity: 0.45; }
+  .btn-filter-clusters:not([disabled]) { color: #7c83fd; border-color: #7c83fd; opacity: 1; }
+  .btn-filter-clusters:not([disabled]):hover { background: #7c83fd15; }
+  .btn-save { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+  .btn-save:hover { background: #4fc3f715; }
+  .btn-reset { background: transparent; color: #78909c; border: 1px solid #b0bec5; }
+  .btn-reset:hover { background: #eceff1; color: #546e7a; }
+  .btn-genes { background: transparent; color: #26c6da; border: 1px solid #26c6da; }
+  .btn-genes:hover { background: #26c6da15; }
+  .btn-genes.active { background: #26c6da; color: #0e1117; }
+  .btn-move { background: transparent; color: #90a4ae; border: 1px solid #cfd8dc; flex:1; padding:5px 4px; font-size:.59rem; }
+  .btn-move:hover { background: #eceff1; color: #546e7a; }
+  .btn-delete-panel { background: transparent; color: #b0bec5; border: 1px solid #cfd8dc; transition: all .2s; }
+  .btn-delete-panel:hover { background: #fef0f0; color: #ef5350; border-color: #ef5350; }
+  .btn-delete-panel.active-delete { color: #ef5350; border-color: #ef5350; }
+
+  #chart { display: block; }

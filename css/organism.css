@@ -1,0 +1,7 @@
+  /* Organism selector (below the upload zone) */
+  .organism-row { margin-top: 8px; }
+  .organism-info, .ic-note {
+    font-size: .56rem; color: var(--text-dim); line-height: 1.4;
+    padding-top: 3px; min-height: 12px;
+  }
+  .ic-note { display: none; min-height: 0; }
