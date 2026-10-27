@@ -1,0 +1,180 @@
+/* cluster-bar.css: Edit bar, cluster bar and pills, SVG cluster strip, assign button */
+  /* ── Cluster panel (LEFT vertical strip, shown in cluster mode) ──── */
+  /* Edit bar — same style as cluster bar */
+  #edit-bar {
+    display: none; flex-direction: row; align-items: stretch;
+    border-bottom: 2px solid #ffe082;
+    background: #fffdf0; flex-shrink: 0; min-height: 44px;
+  }
+  #edit-bar.open { display: flex; }
+  #edit-bar-top {
+    display: flex; align-items: center; gap: 10px;
+    padding: 6px 14px; flex-shrink: 0; border-right: 1px solid #f5c84299;
+  }
+  .eb-title {
+    font-family: 'Syne',sans-serif; font-size: .88rem;
+    font-weight: 800; color: #f5c842; white-space: nowrap;
+  }
+
+  /* ── Cluster bar: fixed action strip + collapsible pills panel ── */
+  #cluster-bar {
+    display: none; flex-direction: column; align-items: stretch;
+    border-bottom: 2px solid #4527a0;
+    background: #ede7f6; flex-shrink: 0;
+  }
+  #cluster-bar.open { display: flex; }
+
+  /* Fixed action strip — always visible, never grows */
+  #cluster-bar-actions {
+    display: flex; flex-direction: row; align-items: stretch;
+    border-bottom: 1px solid #4527a022; flex-shrink: 0; min-height: 46px;
+  }
+  /* Static title — no hover, no click */
+  #cluster-bar-title {
+    display: flex; align-items: center;
+    padding: 0 14px 0 12px; flex-shrink: 0;
+    border-right: 1px solid #4527a055;
+  }
+  #cluster-bar-title .cb-title {
+    font-family: 'Syne',sans-serif; font-size: .88rem;
+    font-weight: 800; color: #3d5afe; white-space: nowrap;
+  }
+  /* Toggle button — looks like Add Cluster */
+  #cluster-bar-top {
+    display: flex; align-items: center; gap: 7px;
+    padding: 0 16px; flex-shrink: 0; cursor: pointer;
+    user-select: none; border-right: 1px solid #ececec;
+    background: transparent; border-top: none; border-bottom: none;
+    border-left: none; border-right: 1px solid #4527a055;
+    transition: background .15s; color: #3d5afe;
+    font-family: 'JetBrains Mono',monospace;
+  }
+  #cluster-bar-top:hover { background: rgba(61,90,254,0.09); }
+  #cb-toggle-arrow {
+    display: flex; align-items: center; gap: 7px; color: #3d5afe;
+  }
+  #cb-toggle-arrow .cb-arrow-icon {
+    font-size: 1.1rem; line-height: 1; transition: transform .2s;
+  }
+  #cb-toggle-arrow .cb-toggle-label {
+    font-size: .75rem; font-weight: 700; letter-spacing: .03em;
+    font-family: 'JetBrains Mono',monospace; white-space: nowrap;
+    color: #3d5afe;
+  }
+  #cluster-bar.pills-collapsed #cb-toggle-arrow .cb-arrow-icon { transform: rotate(-90deg); }
+
+  #cb-add-btn {
+    display: flex; flex-direction: row; align-items: center; justify-content: center;
+    gap: 5px; padding: 0 16px; border-right: 1px solid #4527a055;
+    background: transparent; border-top: none; border-bottom: none; border-left: none;
+    cursor: pointer; flex-shrink: 0;
+    color: #3d5afe; font-family: 'JetBrains Mono',monospace;
+    transition: background .15s; font-size: .75rem; font-weight: 700;
+  }
+  #cb-add-btn:hover { background: rgba(61,90,254,0.07); }
+  #cb-add-btn .cb-add-plus { font-size: 1.2rem; font-weight: 300; line-height: 1; }
+
+  /* Pills panel — collapsible */
+  #cluster-pills-panel {
+    overflow-y: auto; max-height: 140px;
+    transition: max-height .2s ease, padding .2s ease;
+  }
+  #cluster-bar.pills-collapsed #cluster-pills-panel {
+    max-height: 0; overflow: hidden; padding: 0;
+  }
+  #cluster-pills-row {
+    display: flex; flex-direction: row; align-items: center;
+    gap: 5px; padding: 5px 8px; flex: 1; flex-wrap: wrap;
+  }
+  /* each cluster pill */
+  .cb-pill {
+    display: flex; align-items: center; gap: 0;
+    border-radius: 7px; overflow: hidden;
+    border: 1.5px solid #e0e0e0;
+    background: white; flex-shrink: 0;
+    transition: border-color .15s, box-shadow .15s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+  }
+  .cb-pill.drag-target { border-color: #7c83fd; box-shadow: 0 0 0 3px #7c83fd22; }
+  /* color swatch — click to cycle */
+  .cb-pill-swatch {
+    width: 18px; align-self: stretch; min-height: 30px;
+    cursor: pointer; flex-shrink: 0;
+    transition: filter .15s;
+  }
+  .cb-pill-swatch:hover { filter: brightness(1.15); }
+  /* name input */
+  .cb-pill-name {
+    font-size: .63rem; font-weight: 700;
+    font-family: 'JetBrains Mono',monospace;
+    color: #333; border: none; background: transparent; outline: none;
+    padding: 4px 5px 4px 7px; min-width: 0; cursor: default;
+    flex-shrink: 0;
+  }
+  .cb-pill-name:focus { color: #7c83fd; cursor: text; }
+  .cb-pill-name.empty { min-width: 38px; color: #bbb; }
+  .cb-pill-name.ungrouped { color: #aaa; cursor: default; }
+  /* count badge — separated from name by a line */
+  .cb-pill-count {
+    font-size: .58rem; color: #666; font-weight: 600;
+    font-family: 'JetBrains Mono',monospace;
+    padding: 0 6px; white-space: nowrap;
+    border-left: 1px solid #d0d0d0;
+    align-self: stretch; display: flex; align-items: center;
+  }
+
+  /* delete button */
+  .cb-pill-del {
+    background: none; border: none; border-left: 1px solid #f0f0f0;
+    color: #ccc; font-size: .7rem; cursor: pointer;
+    padding: 0 6px; align-self: stretch;
+    display: flex; align-items: center;
+    transition: color .15s, background .15s;
+  }
+  .cb-pill-del:hover { color: #ef5350; background: #fff3f3; }
+
+  .cb-top-btn {
+    padding: 8px 18px; border-radius: 5px;
+    font-family: 'JetBrains Mono',monospace; font-size: .74rem;
+    font-weight: 700; cursor: pointer; transition: all .15s; white-space: nowrap;
+  }
+  .cb-new   { border: 1px solid #7c83fd; background: transparent; color: #7c83fd; }
+  .cb-new:hover { background: #7c83fd18; }
+  .cb-apply { border: none; background: #4caf50; color: white; }
+  .cb-apply:hover { background: #43a047; }
+  .cb-clear { border: 1px solid #ccc; background: white; color: #888; }
+  .cb-clear:hover { background: #f0f0f0; }
+  #cluster-bar-actions .cb-top-btn {
+    margin: 4px 0;
+    align-self: stretch;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 20px;
+  }
+
+  /* SVG cluster label strip — drawn left of MARGIN_LEFT */
+  .cluster-strip-label {
+    font-family: 'Syne',sans-serif; font-size: 10px; font-weight: 700;
+    fill: white; pointer-events: none;
+  }
+
+  /* SVG term row — cluster mode interaction */
+  .term-row-dragging { opacity: 0.35; cursor: grabbing !important; }
+  .term-row-cluster-hover { outline: none; }
+
+  /* Inline cluster assign button that floats next to dragged/hovered term */
+  .cb-assign-menu {
+    position: absolute; z-index: 250;
+    background: var(--surface2,#1e1e2e); border: 1px solid #444;
+    border-radius: 8px; padding: 4px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+    display: flex; flex-direction: column; gap: 2px;
+    min-width: 130px;
+  }
+  .cb-assign-item {
+    display: flex; align-items: center; gap: 7px;
+    padding: 5px 8px; border-radius: 5px; cursor: pointer;
+    font-size: .63rem; font-family: 'JetBrains Mono',monospace;
+    color: #ddd; transition: background .12s;
+  }
+  .cb-assign-item:hover { background: #ffffff18; }
+  .cb-assign-swatch { width: 10px; height: 10px; border-radius: 3px; flex-shrink: 0; }

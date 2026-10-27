@@ -1,0 +1,7 @@
+{
+  "name": "ora-cle",
+  "private": true,
+  "type": "module",
+  "description": "ORA-cle GO enrichment viewer. Static site, no build step; package.json only tells Node to treat js/ and tests/ as ES modules.",
+  "scripts": { "test": "node tests/run-tests.mjs" }
+}

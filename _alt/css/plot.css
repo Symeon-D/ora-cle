@@ -1,0 +1,168 @@
+/* plot.css: Combined SVG, sticky term column, panel drop zones, info tooltip, edit-mode term rows */
+  /* ── Combined SVG / multi-panel layout ──────────────────────────────── */
+  #chart-scroll-area {
+    flex: 1; overflow: auto; background: white; position: relative;
+    padding-top: 4px;
+  }
+  #chart-scroll-area::-webkit-scrollbar { width: 12px; height: 12px; }
+  #chart-scroll-area::-webkit-scrollbar-thumb { background: #bbb; border-radius: 6px; }
+  #sticky-gene-header {
+    background: white; border-bottom: 1px solid #ddd;
+    z-index: 20; transition: opacity 0.15s ease;
+    opacity: 0;
+  }
+  #sticky-gene-header.visible {
+    opacity: 1;
+  }
+  #sticky-gene-header svg { display: block; }
+
+  /* ── Sticky term column (left side — appears when scrolling right) ── */
+  #sticky-term-column {
+    position: absolute; top: 0; left: 0;
+    background: white;
+    border-right: 1px solid #e8e8e8;
+    z-index: 8;
+    pointer-events: none;
+    display: none;
+    overflow: hidden;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.08);
+    will-change: transform;
+  }
+  #sticky-term-column svg { display: block; pointer-events: all; overflow: hidden; }
+  #sticky-term-column circle.dot { pointer-events: all; cursor: pointer; }
+
+  #combined-svg { display: block; background: white; }
+
+  /* Drop zone for empty panels (shown inside SVG as foreign object) */
+  .panel-drop-zone {
+    border: 2px dashed #e0e0e0; border-radius: 10px;
+    padding: 24px 16px; text-align: center;
+    cursor: pointer; transition: all .2s;
+    background: #fafafa; margin: 10px;
+  }
+  .panel-drop-zone:hover, .panel-drop-zone.drag { border-color: #4fc3f7; background: #e8f7fd; }
+  .panel-drop-zone p { font-size: .68rem; color: #aaa; font-family: 'JetBrains Mono',monospace; }
+  .panel-drop-zone strong { color: #4fc3f7; }
+
+  /* Floating drop zones overlay for empty panels */
+  #drop-zones-layer {
+    position: absolute; top: 0; left: 0; pointer-events: none;
+  }
+  .panel-drop-overlay {
+    position: absolute; pointer-events: all;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    cursor: pointer; border: 2px dashed #e0e0e0; border-radius: 8px;
+    background: #fafafa; transition: all .2s;
+    font-family: 'JetBrains Mono',monospace;
+  }
+  .panel-drop-overlay:hover, .panel-drop-overlay.drag { border-color: #4fc3f7; background: #e8f7fd50; }
+  .panel-drop-overlay p { font-size: .65rem; color: #aaa; text-align: center; padding: 0 8px; }
+  .panel-drop-overlay strong { color: #4fc3f7; }
+
+  /* Active panel highlight (CSS class toggled on SVG column rect) */
+  .subplot-active-border { stroke: #4fc3f7 !important; stroke-width: 2.5 !important; }
+
+  /* Drop overlay (shown only when no panels have data) */
+  #main-drop-overlay.hidden { display: none; }
+
+
+  #tooltip {
+    position: fixed; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 13px; font-size: .62rem;
+    pointer-events: none; opacity: 0; transition: opacity .15s;
+    z-index: 1000;
+  }
+  #tooltip.show { opacity: 1; }
+  .tt-name { font-weight: 600; color: var(--accent); margin-bottom: 5px; font-size: .67rem; line-height: 1.35; }
+  #tooltip-grid { display: grid; grid-template-columns: max-content auto; column-gap: 8px; row-gap: 2px; align-items: start; white-space: nowrap; }
+  .tt-label { color: var(--text-dim); text-align: right; }
+  .tt-val   { color: var(--text); }
+  .tt-genes-section { margin-top: 4px; padding-top: 4px; border-top: 1px solid var(--border); }
+  .tt-genes-key { color: var(--text-dim); font-size: .61rem; margin-bottom: 2px; }
+  #tt-genes { color: var(--text); font-size: .61rem; line-height: 1.5; word-break: break-word; overflow-wrap: anywhere; white-space: normal; }
+
+  /* ── Info icon tooltip ───────────────────────────────────────── */
+  #go-def-tooltip {
+    position: fixed; background: var(--surface2);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 13px; font-size: .62rem; max-width: 340px;
+    color: var(--text); font-family: 'JetBrains Mono', monospace;
+    pointer-events: none; opacity: 0; transition: opacity .15s;
+    z-index: 1001; line-height: 1.5;
+  }
+  #go-def-tooltip.show { opacity: 1; }
+  .it-header { margin-bottom: 6px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+  .it-id   { font-weight: 700; color: var(--accent); font-size: .65rem; margin-right: 6px; }
+  .it-name { color: var(--text); font-size: .63rem; font-weight: 500; }
+  .it-def  { color: var(--text); font-size: .61rem; line-height: 1.55;
+              white-space: normal; word-break: break-word; }
+  .it-src  { color: var(--text-dim); font-size: .59rem; margin-top: 4px; font-style: italic; }
+  .it-comment { color: var(--text-dim); font-size: .60rem; margin-top: 5px;
+                padding-top: 5px; border-top: 1px solid var(--border);
+                white-space: normal; word-break: break-word; line-height: 1.5; }
+
+  /* ── Edit panel ──────────────────────────────────────────── */
+
+  /* Term rows */
+  .edit-term-item {
+    display: flex; align-items: center; gap: 7px;
+    padding: 5px 10px; cursor: default; transition: background .1s;
+    font-size: .63rem; color: #444;
+    font-family: 'JetBrains Mono', monospace; line-height: 1.3;
+  }
+  .edit-term-item:hover { background: #f6f6f6; }
+  .edit-term-item.unchecked { color: #ccc; }
+  /* Drag handle */
+  .edit-drag-handle {
+    cursor: grab; color: #ccc; flex-shrink: 0;
+    display: flex; align-items: center;
+    padding: 0 2px;
+  }
+  .edit-drag-handle:hover { color: #999; }
+  .edit-drag-handle svg { width: 10px; height: 14px; }
+  /* Checkbox (right side) */
+  .edit-checkbox {
+    width: 14px; height: 14px; border-radius: 3px;
+    border: 1.5px solid #ccc; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s; cursor: pointer; margin-left: auto;
+  }
+  .edit-term-item:not(.unchecked) .edit-checkbox { border-color: #4fc3f7; background: #4fc3f7; }
+  .check-svg { width: 9px; height: 9px; display: none; }
+  .edit-term-item:not(.unchecked) .check-svg { display: block; }
+  /* Cluster colour dot on term */
+  .edit-term-cluster-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+
+  .edit-select-all {
+    padding: 6px 13px; border-bottom: 1px solid #f5f5f5;
+    display: flex; align-items: center; gap: 7px;
+    font-size: .61rem; color: #888; cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .edit-select-all:hover { background: #fafafa; }
+
+  #edit-term-list { flex: 1; overflow-y: auto; padding: 5px 0; }
+  #edit-term-list::-webkit-scrollbar { width: 6px; }
+  #edit-term-list::-webkit-scrollbar-thumb { background: #e0e0e0; border-radius: 3px; }
+
+  .edit-term-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 14px; cursor: pointer; transition: background .1s;
+    font-size: .63rem; color: #444;
+    font-family: 'JetBrains Mono', monospace; line-height: 1.3;
+  }
+  .edit-term-item:hover { background: #f6f6f6; }
+  .edit-term-item.unchecked { color: #ccc; }
+  .edit-checkbox {
+    width: 14px; height: 14px; border-radius: 3px;
+    border: 1.5px solid #ccc; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: all .15s;
+  }
+  .edit-term-item:not(.unchecked) .edit-checkbox { border-color: #4fc3f7; background: #4fc3f7; }
+  .check-svg { width: 9px; height: 9px; display: none; }
+  .edit-term-item:not(.unchecked) .check-svg { display: block; }

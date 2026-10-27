@@ -1,0 +1,17 @@
+/* header.css: Header bar */
+  /* HEADER */
+  header {
+    grid-column: 1/-1;
+    padding: 13px 22px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex; align-items: center; gap: 14px;
+  }
+  header h1 {
+    font-family: 'Syne', sans-serif; font-size: 1.05rem;
+    font-weight: 800; letter-spacing: .05em; color: var(--accent);
+  }
+  .badge {
+    font-size: .62rem; color: var(--text-dim);
+    border: 1px solid var(--border); padding: 2px 8px; border-radius: 99px;
+  }

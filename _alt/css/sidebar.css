@@ -1,0 +1,55 @@
+/* sidebar.css: Sidebar shell, edge toggle tab, upload zone */
+  /* SIDEBAR */
+  aside {
+    background: var(--surface); border-right: 1px solid var(--border);
+    padding: 15px 13px; overflow-y: auto; overflow-x: hidden;
+    display: flex; flex-direction: column; gap: 14px;
+    transition: padding .28s, opacity .18s;
+    position: relative; min-width: 0;
+  }
+  body.sidebar-collapsed aside {
+    padding: 0; opacity: 0; pointer-events: none; overflow: hidden;
+  }
+  aside::-webkit-scrollbar { width: 6px; }
+  aside::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+  /* Sidebar toggle tab — always visible on left edge of main area */
+  #sidebar-edge-tab {
+    position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+    width: 20px; height: 52px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-left: none; border-radius: 0 8px 8px 0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; z-index: 60;
+    color: var(--text-dim);
+    transition: background .15s, color .15s, opacity .18s;
+    opacity: 0.45;
+  }
+  #sidebar-edge-tab:hover { background: var(--surface2); color: var(--accent); opacity: 1; }
+  #sidebar-edge-tab svg { width: 11px; height: 11px; }
+
+  /* Header sidebar-toggle button */
+  #sidebar-toggle-btn:hover { color: var(--accent) !important; }
+
+  .section-label {
+    font-size: .57rem; font-weight: 600; letter-spacing: .12em;
+    color: var(--text-dim); text-transform: uppercase; margin-bottom: 6px;
+  }
+
+  /* Upload */
+  .upload-zone-small {
+    border: 1.5px dashed var(--border); border-radius: var(--radius);
+    padding: 11px 10px; text-align: center; cursor: pointer;
+    transition: all .2s; background: var(--bg);
+  }
+  .upload-zone-small:hover, .upload-zone-small.drag { border-color: var(--accent); background: #4fc3f710; }
+  .upload-zone-small p { font-size: .67rem; color: var(--text-dim); }
+  .upload-zone-small strong { color: var(--accent); }
+  #fileInput { display: none; }
+  .file-loaded { display:flex; align-items:center; gap:5px; font-size:.64rem; color:var(--success); }
+  #upload-status {
+    font-size: .52rem; font-weight: 700; padding: 2px 6px; border-radius: 4px;
+    display: none; letter-spacing: .02em; white-space: nowrap;
+  }
+  #upload-status.success { display: block; background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  #upload-status.error   { display: block; background: #ffebee; color: #c62828; border: 1px solid #ef9a9a; }
